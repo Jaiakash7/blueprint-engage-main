@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 5%;
+    --foreground: 0 0% 95%;
+
+    --card: 220 15% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 220 15% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 45 100% 50%;
+    --primary-foreground: 220 20% 5%;
+
+    --secondary: 210 65% 56%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 220 10% 18%;
+    --muted-foreground: 220 10% 55%;
+
+    --accent: 14 100% 57%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 220 10% 25%;
+    --input: 220 10% 25%;
+    --ring: 45 100% 50%;
+
+    --radius: 0.75rem;
+
+    --glass: 220 15% 12%;
+    --glass-border: 220 10% 30%;
+    --dock-bg: 220 15% 8%;
+
+    --caution: 45 100% 50%;
+    --blueprint: 210 65% 56%;
+    --safety: 14 100% 57%;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground overflow-hidden;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-mono-tech {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .font-display {
+    font-family: 'Inter', sans-serif;
+  }
+
+  .glass-panel {
+    @apply bg-[hsl(var(--glass)/0.8)] backdrop-blur-md border border-[hsl(var(--glass-border))];
+  }
+
+  .glass-panel-light {
+    @apply bg-[hsl(0_0%_100%/0.08)] backdrop-blur-xl border border-[hsl(0_0%_100%/0.12)];
+  }
+
+  .text-caution {
+    color: hsl(var(--caution));
+  }
+
+  .text-blueprint {
+    color: hsl(var(--blueprint));
+  }
+
+  .text-safety {
+    color: hsl(var(--safety));
+  }
+
+  .bg-caution {
+    background-color: hsl(var(--caution));
+  }
+
+  .bg-blueprint {
+    background-color: hsl(var(--blueprint));
+  }
+
+  .bg-safety {
+    background-color: hsl(var(--safety));
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .dock-button {
+    @apply w-14 h-14 rounded-full flex items-center justify-center text-foreground shadow-lg transition-transform active:scale-90;
+  }
+
+  .nav-grid-button {
+    @apply flex flex-col items-center justify-center gap-2 w-[72px] h-[72px] rounded-2xl glass-panel-light transition-transform active:scale-95;
+  }
+
+  @keyframes pulse-chevron {
+    0%, 100% { opacity: 0.4; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-6px); }
+  }
+
+  .animate-pulse-chevron {
+    animation: pulse-chevron 2s ease-in-out infinite;
+  }
+}
