@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import { CalendarDays, ChevronRight } from "lucide-react";
 import StatusBar from "./StatusBar";
-import HomeCarousel from "./HomeCarousel";
-import NavGrid from "./NavGrid";
 import BottomDock from "./BottomDock";
 import BottomSheet from "./BottomSheet";
 import HomePageTwo from "./HomePageTwo";
-import bgImage from "@/assets/bg-industrial.jpg";
+
+// Your imported widgets from Step 1
+import HeroWidget from "./HeroWidget";
+import NavIcons from "./NavIcons";
+import CollegeBanner from "./CollegeBanner";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
@@ -24,20 +26,18 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <div
-      className="relative w-full h-full overflow-hidden flex flex-col"
-      style={{
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-[hsl(var(--background)/0.7)]" />
+    <div className="relative w-full h-full overflow-hidden flex flex-col bg-background">
+      {/* Dark mechanical gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background" />
 
       <div className="relative z-10 flex flex-col h-full">
         <div className="lg:hidden">
           <StatusBar />
+        </div>
+
+        {/* College Banner at the top */}
+        <div className="w-full max-w-[400px] lg:max-w-5xl mx-auto px-4 mt-2">
+           <CollegeBanner />
         </div>
 
         {/* Swipeable pages container */}
@@ -46,40 +46,41 @@ const HomeScreen = () => {
           onScroll={handleScroll}
           className="flex-1 flex overflow-x-auto snap-x snap-mandatory hide-scrollbar"
         >
-          {/* Page 1 */}
-          <div className="w-full shrink-0 snap-center flex flex-col items-center">
-            {/* Inner container to center content on Desktop */}
-            <div className="w-full max-w-[400px] lg:max-w-[800px] flex flex-col h-full lg:justify-center lg:py-12">
-              {/* Carousel */}
-              <div className="mt-2 lg:mt-0">
-                <HomeCarousel />
+          {/* PAGE 1: Your new side-by-side desktop layout */}
+          <div className="w-full shrink-0 snap-center flex flex-col items-center justify-center">
+            <div className="w-full max-w-[400px] lg:max-w-5xl flex flex-col lg:flex-row items-center lg:items-start gap-5 lg:gap-12 h-full lg:justify-center lg:py-8 px-4 lg:px-0">
+              
+              {/* Left Side: Hero Widget */}
+              <div className="flex-1 flex justify-center w-full mt-2 lg:mt-0">
+                <HeroWidget />
               </div>
 
-              {/* Nav Grid */}
-              <div className="mt-5 lg:mt-10">
-                <NavGrid />
+              {/* Right Side: NavIcons + Explore Events CTA */}
+              <div className="flex flex-col gap-5 lg:gap-8 items-center w-full lg:w-[400px] mt-2 lg:mt-0">
+                <div className="w-full">
+                  <NavIcons />
+                </div>
+                <div className="w-full">
+                  <button
+                    onClick={() => navigate("/events")}
+                    className="w-full glass-panel rounded-2xl lg:rounded-3xl p-4 lg:p-6 flex items-center gap-3 group active:scale-[0.98] lg:hover:scale-[1.02] transition-transform cursor-pointer"
+                  >
+                    <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-xl bg-safety flex items-center justify-center shrink-0">
+                      <CalendarDays size={22} className="text-foreground lg:scale-125" />
+                    </div>
+                    <div className="flex-1 text-left lg:ml-2">
+                      <p className="font-mono-tech text-[9px] lg:text-xs tracking-[0.2em] text-muted-foreground">● REGISTRATION OPEN</p>
+                      <p className="text-base lg:text-xl font-bold text-foreground mt-0.5 lg:mt-1">Explore Events</p>
+                    </div>
+                    <ChevronRight size={20} className="text-muted-foreground lg:scale-125" />
+                  </button>
+                </div>
               </div>
 
-              {/* CTA */}
-              <div className="mt-5 lg:mt-10 px-4 lg:px-0">
-                <button
-                  onClick={() => navigate("/events")}
-                  className="w-full glass-panel rounded-2xl lg:rounded-3xl p-4 lg:p-6 flex items-center gap-3 group active:scale-[0.98] lg:hover:scale-[1.02] transition-transform cursor-pointer"
-                >
-                  <div className="w-12 h-12 lg:w-16 lg:h-16 rounded-xl bg-safety flex items-center justify-center shrink-0">
-                    <CalendarDays size={22} className="text-foreground lg:scale-125" />
-                  </div>
-                  <div className="flex-1 text-left lg:ml-2">
-                    <p className="font-mono-tech text-[9px] lg:text-xs tracking-[0.2em] text-muted-foreground">● REGISTRATION OPEN</p>
-                    <p className="text-base lg:text-xl font-bold text-foreground mt-0.5 lg:mt-1">Explore Events</p>
-                  </div>
-                  <ChevronRight size={20} className="text-muted-foreground lg:scale-125" />
-                </button>
-              </div>
             </div>
           </div>
 
-          {/* Page 2 */}
+          {/* PAGE 2: Untouched, exact same as before */}
           <div className="w-full shrink-0 snap-center flex flex-col items-center">
              <div className="w-full max-w-[400px] lg:max-w-[800px] flex flex-col h-full lg:justify-center lg:py-12">
                 <HomePageTwo />
@@ -103,9 +104,21 @@ const HomeScreen = () => {
         <BottomDock onOpenSheet={setActiveSheet} />
       </div>
 
-      {/* Bottom Sheets (Unchanged) */}
+      {/* Bottom Sheets */}
       <AnimatePresence>
-        {/* ... (Keep your existing Bottom Sheets code here) ... */}
+        {activeSheet && (
+          <BottomSheet
+            id={activeSheet}
+            title={activeSheet.charAt(0).toUpperCase() + activeSheet.slice(1)}
+            onClose={() => setActiveSheet(null)}
+          >
+            <div className="p-4 flex flex-col gap-4">
+              <p className="text-muted-foreground text-sm">
+                Content for {activeSheet} will be displayed here.
+              </p>
+            </div>
+          </BottomSheet>
+        )}
       </AnimatePresence>
     </div>
   );
