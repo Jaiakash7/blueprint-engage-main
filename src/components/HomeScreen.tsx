@@ -108,7 +108,6 @@ const HomeScreen = () => {
       <AnimatePresence>
         {activeSheet && (
           <BottomSheet
-            id={activeSheet}
             title={activeSheet.charAt(0).toUpperCase() + activeSheet.slice(1)}
             onClose={() => setActiveSheet(null)}
           >
@@ -121,6 +120,7 @@ const HomeScreen = () => {
         )}
       </AnimatePresence>
     </div>
+    
   );
 };
 
