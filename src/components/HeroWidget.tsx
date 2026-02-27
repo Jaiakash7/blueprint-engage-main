@@ -137,7 +137,7 @@ export default function HeroWidget() {
 
   return (
     <div className="relative w-full max-w-2xl">
-      <div className="chrome-card-elevated overflow-hidden min-h-[380px] flex flex-col">
+      <div className="chrome-card-elevated overflow-hidden min-h-[80px] flex flex-col">
         {/* Title bar with gear dots */}
         <div className="flex items-center gap-2 px-4 py-3 border-b border-primary/20 bg-secondary/50">
           <div className="flex gap-1.5">

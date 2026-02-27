@@ -7,10 +7,13 @@ import BottomDock from "./BottomDock";
 import BottomSheet from "./BottomSheet";
 import HomePageTwo from "./HomePageTwo";
 
-// Your imported widgets from Step 1
+// Your imported widgets
 import HeroWidget from "./HeroWidget";
 import NavIcons from "./NavIcons";
 import CollegeBanner from "./CollegeBanner";
+
+// Imported your cosmic background image!
+import bgImage from "@/assets/cosmic-bg.jpg";
 
 const HomeScreen = () => {
   const navigate = useNavigate();
@@ -26,9 +29,16 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <div className="relative w-full h-full overflow-hidden flex flex-col bg-background">
-      {/* Dark mechanical gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-secondary to-background" />
+    <div 
+      className="relative w-full h-full overflow-hidden flex flex-col bg-background"
+      style={{
+        backgroundImage: `url(${bgImage})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+      }}
+    >
+      {/* Dark overlay to make the neon widgets pop against the background */}
+      <div className="absolute inset-0 bg-background/80" />
 
       <div className="relative z-10 flex flex-col h-full">
         <div className="lg:hidden">
@@ -104,13 +114,10 @@ const HomeScreen = () => {
         <BottomDock onOpenSheet={setActiveSheet} />
       </div>
 
-      {/* Bottom Sheets */}
+      {/* Bottom Sheets (TYPESCRIPT ERROR FIXED HERE) */}
       <AnimatePresence>
         {activeSheet && (
-          <BottomSheet
-            title={activeSheet.charAt(0).toUpperCase() + activeSheet.slice(1)}
-            onClose={() => setActiveSheet(null)}
-          >
+          <BottomSheet onClose={() => setActiveSheet(null)}>
             <div className="p-4 flex flex-col gap-4">
               <p className="text-muted-foreground text-sm">
                 Content for {activeSheet} will be displayed here.
@@ -120,7 +127,6 @@ const HomeScreen = () => {
         )}
       </AnimatePresence>
     </div>
-    
   );
 };
 
